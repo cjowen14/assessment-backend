@@ -1,17 +1,19 @@
 [
+
     {
-      "id": 1,
-      "name": "Luke Skywalker",
-      "imageURL" : "https://yt3.ggpht.com/a/AATXAJwUNvZUZEFVIcOlwljpMtduJTyoow3UiigtuA=s900-c-k-c0xffffffff-no-rj-mo"
-    },
-    {
-      "id": 2,
-      "name": "Obi-Wan Kenobi",
-      "imageURL" : "https://th.bing.com/th/id/R.5a463867dedf6bfb7a6ee7417fd87fa3?rik=ULLm1NbWyw1vXw&pid=ImgRaw&r=0"
-    },
-    {
-      "id": 3,
-      "name": "Kylo Ren",
-      "imageURL" : "https://static2.srcdn.com/wordpress/wp-content/uploads/2020/06/Star-Wars-The-Rise-of-Skywalker-Kylo-Ren-Adam-Driver-With-Helmet.jpg"
-    }
+    "fortune": "A fresh start will put you on your way."
+},
+{
+    "fortune": "A lifetime of happiness lies ahead of you."
+},
+{
+    "fortune": "A soft voice may be awfully persuasive."
+},
+{
+    "fortune": "All your hard work will soon pay off."
+},
+{
+    "fortune": "Happy life is just in front of you."
+}
+    
   ]

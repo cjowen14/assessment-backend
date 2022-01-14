@@ -1,6 +1,10 @@
+
+
 const fortune = document.querySelector("#fortuneButton");
-const allChars = document.querySelector("#allChars");
-const newChar = document.querySelector("#newChar");
+const allForts = document.querySelector("#allForts");
+const newFortune = document.querySelector("#newFortune");
+const deleteFort = document.querySelector("#deleteFortune");
+const fortunesContainer = document.querySelector("#fortunes-container")
 
 
 document.getElementById("complimentButton").onclick = function () {
@@ -19,40 +23,71 @@ document.getElementById("complimentButton").onclick = function () {
       })
   }
 
-  function getAllChars(){
-    axios.get("http://localhost:4000/api/characters")
+  function getAllFortunes(){
+    axios.get("http://localhost:4000/api/fortunes")
     .then(function (res) {
-      const data = res.data;
-      alert(data);
+      const fortNames = document.createElement('h2');
+      fortNames.textContent = res.data;
+      fortunesContainer.appendChild(fortNames);
     })
   }
   function submit(e){
     e.preventDefault();
 
-    let name = document.querySelector("#addChar");
-    let imageURL = document.querySelector("#img");
+    let fortuneText = document.querySelector("#newFor");
 
     let bodyObj = {
-      name: name.value,
-      imageURL: imageURL.value
+      fortune: fortuneText.value
     }
 
-    addNewChar(bodyObj);
+    addNewFort(bodyObj);
 
-    name.value = '';
-    imageURL.value = '';
-    
+    fortune.value = '';
   }
 
-  function addNewChar(body){
-    axios.post("http://localhost:4000/api/characters", body)
+  function addNewFort(body){
+    axios.post("http://localhost:4000/api/fortune", body)
     .then(function (res){
+      console.log(res.data);
+      const fortNames = document.createElement('h2');
+      fortNames.textContent = res.data;
+      fortunesContainer.appendChild(fortNames);
+
+    })
+  }
+
+  function deleteStart (e){
+    e.preventDefault();
+
+    let fortuneText = document.querySelector("#deleteFor");
+
+    let bodyObj = {
+      fortune: fortuneText.value
+    }
+
+    deleteFunc(bodyObj);
+
+    fortune.value = '';
+  }
+
+  function deleteFunc(){
+    axios.delete("http://localhost:4000/api/fortune/:id")
+    .then(function(res){
       const data = res.data;
       alert(data);
     })
   }
 
+  function fortuneList (fortune){
+    const fortList = document.createElement('div');
+
+    fortList.innerHTML = `<p> ${fortune.fortune}</p>`;
+
+    fortunesContainer.appendChild(fortList);
+  }
+
+  getAllFortunes();
 
   fortune.addEventListener("click", fortuneFunction);
-  allChars.addEventListener("click", getAllChars);
-  newChar.addEventListener("click", submit);
+  newFortune.addEventListener("click", submit);
+  deleteFort.addEventListener("click", deleteStart);

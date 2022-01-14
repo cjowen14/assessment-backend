@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const characters = require('./db.json');
-let globalID = 4;
+const fortuneList = require('./db.json');
+
 
 const app = express();
 
@@ -25,52 +25,54 @@ app.get("/api/compliment", (req, res) => {
 });
 
 app.get("/api/fortune", (req, res) => {
-  const fortunes = ["A fresh start will put you on your way.", 
-                    "A lifetime of happiness lies ahead of you.",
-                    "A soft voice may be awfully persuasive.",
-                    "All your hard work will soon pay off.",
-                    "Happy life is just in front of you."
-                  ];
-  //console.log(fortunes);
-  let randomIndex = Math.floor(Math.random() * fortunes.length);
-  let randomFortune = fortunes[randomIndex];
+  console.log(fortuneList);
+  let randomIndex = Math.floor(Math.random() * fortuneList.length);
+  let randomFortune = fortuneList[randomIndex].fortune;
 
   res.status(200).send(randomFortune);
 })
 
-app.get("/api/characters", (req, res) => {
-  let namesArray = [];
-  let namesString = '';
-  for(let i = 0; i < characters.length; i++){
+app.get("/api/fortunes", (req, res) => {
+  let fortunesArray = [];
+  let fortunesString = '';
+  for(let i = 0; i < fortuneList.length; i++){
     //console.log(characters[i].name);
-    namesArray.push(characters[i].name);
-    namesString = namesArray.join('  /  ');  
+    fortunesArray.push(fortuneList[i].fortune);
+    fortunesString = fortunesArray.join('  /  ');
+     
   }
   //console.log(namesArray);
-  res.status(200).send(namesString);
+  res.status(200).send(fortunesString);
   
 })
 
-app.post("/api/characters", (req, res) => {
-  console.log(req.body);
-  let{name, imageURL} = req.body;
-  let namesString = '';
-  let namesArray = [];
+app.post("/api/fortune", (req, res) => {
+  //console.log(req.body);
+  let{fortune} = req.body;
+  let fortunesString = '';
+  let fortunesArray = [];
 
-  let newChar = {
-    id: globalID,
-    name,
-    imageURL
+  let newFort = {
+    fortune
   }
 
-  characters.push(newChar);
-  //console.log(characters);
-  for (let i = 0; i < characters.length; i++){
-    namesArray.push(characters[i].name)
+  fortuneList.push(newFort);
+  //console.log(fortuneList);
+  for (let i = 0; i < fortuneList.length; i++){
+    fortunesArray.push(fortuneList[i].fortune)
   }
-  namesString = namesArray.join('  /  ')
-  res.status(200).send(namesString);
-  globalID++
+  console.log(fortunesArray);
+  fortunesString = fortunesArray.join('  /  ')
+  res.status(200).send(fortunesString);
+
+})
+
+
+
+app.delete("/api/fortune/:id", (res, req) => {
+  let index = fortuneList.findIndex((fort) => {
+    return fort.id === +req.params.id;
+  })
 })
 
 app.listen(4000, () => console.log("Server running on 4000"));
